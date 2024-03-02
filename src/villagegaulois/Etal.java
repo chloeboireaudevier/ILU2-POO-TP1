@@ -52,7 +52,12 @@ public class Etal {
 		return "L'étal est libre";
 	}
 
-	public String acheterProduit(int quantiteAcheter, Gaulois acheteur) {
+	public String acheterProduit(int quantiteAcheter, Gaulois acheteur) throws IllegalArgumentException, IllegalStateException{
+		if (quantiteAcheter<1) {
+			throw new IllegalArgumentException("Le paramètre d'entrée n'est pas pas positif");
+		} else if (!this.isEtalOccupe()) {
+			throw new IllegalStateException("Impossible d'acheter à un étal vide !");
+		}
 		StringBuilder chaine = new StringBuilder();
 		try {
 			chaine.append(acheteur.getNom() + " veut acheter " + quantiteAcheter
@@ -76,6 +81,7 @@ public class Etal {
 			}
 		
 		}catch (NullPointerException e) {
+			e.printStackTrace();
 			chaine = new StringBuilder();
 		}
 		return chaine.toString();
